@@ -1,13 +1,11 @@
 using ApiBase.Auth.Authentication;
 using ApiBase.Auth.Authorization;
-using ApiBase.Auth.Authorization.Attributes;
 using ApiBase.Auth.Authorization.Handlers;
-using ApiBase.Context;
 using ApiBase.Filters.Action;
 using ApiBase.Middleware;
 using ApiBase.MyLogs;
-using ApiBase.Services;
-using ApiBase.Services.Interfaces;
+using ApiBase.Services.Auth;
+using ApiBase.Services.Auth.Interfaces;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -41,14 +39,8 @@ try
     builder.Services.AddSingleton<IAuthorizationHandler, ClaimHandler>();
 
     //------- Filtros Globales
-    builder.Services.Configure<ApiBehaviorOptions>(options =>
-    {
-        options.SuppressModelStateInvalidFilter = true;
-    });
-    builder.Services.AddControllers(config =>
-    {
-        config.Filters.Add(new ValidationModelAttribute());
-    });
+    builder.Services.Configure<ApiBehaviorOptions>(options => { options.SuppressModelStateInvalidFilter = true; });
+    builder.Services.AddControllers(config => { config.Filters.Add(new ValidationModelAttribute()); });
 
     //------- Servicios de Versiones
     builder.Services.AddApiVersioning(options =>
@@ -62,12 +54,9 @@ try
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
     //------- DbContext
-    builder.Services.AddDbContext<ZamoWebAppContext>();
 
     //------- Interface
     builder.Services.AddTransient<IAuthServices, AuthServices>();
-    
-    builder.Services.AddTransient<IEjemploService, EjemploService>();
 
     //------- Evitar que se cambien los nombres de los claim
     JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
@@ -82,15 +71,6 @@ try
     //____________________________________________ Configuración de la APP
     var app = builder.Build();
     app.UseSerilogRequestLogging();
-
-    //------- Ruta Inicial
-    string rutaAPI = builder.Configuration["RutaAPI"]!;
-    app.UsePathBase(rutaAPI);
-    app.Use((context, next) =>
-    {
-        context.Request.PathBase = rutaAPI;
-        return next();
-    });
 
     //------- Swagger
     if (app.Environment.IsDevelopment())
@@ -110,8 +90,7 @@ try
 catch (Exception ex)
 {
     Log.Fatal(ex, "Application terminated unexpectedly");
-}
-finally
+} finally
 {
     Log.CloseAndFlush();
 }

@@ -8,21 +8,21 @@ namespace ApiBase.Auth.Authorization.Handlers
     {
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, RolesRequirement requirement)
         {
-            //Validar identidad
+            //VALIDAR IDENTIDAD
             if (context.User.Identity == null)
             {
                 context.Fail(new AuthorizationFailureReason(this, "El usuario no cuenta con una identidad"));
                 return Task.CompletedTask;
             }
 
-            //Validar usuario autenticado
+            //VALIDAR USUARIO AUTENTICADO
             if (!context.User.Identity.IsAuthenticated)
             {
                 context.Fail(new AuthorizationFailureReason(this, "El usuario no está autenticado"));
                 return Task.CompletedTask;
             }
 
-            //Validar que el token contenga el claim de "roles"
+            //VALIDAR QUE EL TOKEN CONTENGA EL CLAIM DE "ROLES"
             bool hasClaim = context.User.Claims.Any(x => x.Type == "roles");
             if (!hasClaim)
             {
@@ -30,17 +30,17 @@ namespace ApiBase.Auth.Authorization.Handlers
                 return Task.CompletedTask;
             }
 
-            //Validar que el token contenga alguno de los roles requeridos
+            //VALIDAR QUE EL TOKEN CONTENGA ALGUNO DE LOS ROLES REQUERIDOS
             var userRoles = context.User.Claims.Where(c => c.Type == "roles");
             string[] allowedRoles = requirement.Roles;
-            bool hasAllowedRole = userRoles.Any(x => allowedRoles.Contains(x.Value)) || allowedRoles.Length==0;
+            bool hasAllowedRole = userRoles.Any(x => allowedRoles.Contains(x.Value)) || allowedRoles.Length == 0;
             if (!hasAllowedRole)
             {
                 context.Fail(new AuthorizationFailureReason(this, "El usuario no cuenta con alguno de los roles requeridos"));
                 return Task.CompletedTask;
             }
 
-            //El requerimiento fue cumplido con éxito
+            //EL REQUERIMIENTO FUE CUMPLIDO CON ÉXITO
             context.Succeed(requirement);
             return Task.CompletedTask;
         }

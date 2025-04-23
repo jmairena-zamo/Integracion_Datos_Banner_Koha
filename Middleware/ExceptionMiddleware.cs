@@ -1,10 +1,10 @@
 ﻿using ApiBase.Constant;
 using ApiBase.Models;
 using Newtonsoft.Json;
-using Serilog.Context;
-using System.Net.Mime;
-using System.Net;
 using Newtonsoft.Json.Serialization;
+using Serilog.Context;
+using System.Net;
+using System.Net.Mime;
 
 namespace ApiBase.Middleware
 {
@@ -26,14 +26,14 @@ namespace ApiBase.Middleware
         {
             try
             {
-                //Validar Media Type
+                //VALIDAR MEDIA TYPE
                 if (context.Request.Method == "PUT" || context.Request.Method == "POST" || context.Request.Method == "PATCH")
                 {
                     string mediaTypeRequest = context.Request.ContentType ?? "No especificada";
                     bool isValidJsonMediaType = AllowjsonMediaTypes.Any(x => string.Equals(mediaTypeRequest, x, StringComparison.OrdinalIgnoreCase));
                     if (!isValidJsonMediaType)
                     {
-                        context.Response.Headers.Add("Content-Type", "application/json");
+                        context.Response.Headers.Append("Content-Type", "application/json");
                         context.Response.StatusCode = StatusCodes.Status415UnsupportedMediaType;
                         await context.Response.WriteAsync(JsonConvert.SerializeObject(
                             new ResponseModel(StatusCodes.Status415UnsupportedMediaType, ReplyMessages.unsupportedMediaType, $"Media Type no soportada: {mediaTypeRequest}")

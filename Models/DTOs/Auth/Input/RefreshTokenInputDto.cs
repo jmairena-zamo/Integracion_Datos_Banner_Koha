@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ApiBase.Models.DTOs.Input
+namespace ApiBase.Models.DTOs.Auth.Input
 {
     public class RefreshTokenInputDto
     {

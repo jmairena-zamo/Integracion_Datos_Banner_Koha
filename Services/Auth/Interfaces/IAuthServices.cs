@@ -1,6 +1,6 @@
 ﻿using ApiBase.Models;
 
-namespace ApiBase.Services.Interfaces
+namespace ApiBase.Services.Auth.Interfaces
 {
     public interface IAuthServices
     {

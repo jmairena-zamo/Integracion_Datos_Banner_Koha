@@ -1,10 +1,10 @@
 ﻿using ApiBase.Models;
-using ApiBase.Models.DTOs.Input;
-using ApiBase.Services.Interfaces;
+using ApiBase.Models.DTOs.Auth.Input;
+using ApiBase.Services.Auth.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ApiBase.Controllers.v1
+namespace ApiBase.Controllers.Auth.v1
 {
     [Route("auth")]
     [ApiController]

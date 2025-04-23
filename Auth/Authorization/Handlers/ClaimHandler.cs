@@ -7,21 +7,21 @@ namespace ApiBase.Auth.Authorization.Handlers
     {
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ClaimRequirement requirement)
         {
-            //Validar identidad
+            //VALIDAR IDENTIDAD
             if (context.User.Identity == null)
             {
                 context.Fail(new AuthorizationFailureReason(this, "El usuario no cuenta con una identidad"));
                 return Task.CompletedTask;
             }
 
-            //Validar usuario autenticado
+            //VALIDAR USUARIO AUTENTICADO
             if (!context.User.Identity.IsAuthenticated)
             {
                 context.Fail(new AuthorizationFailureReason(this, "El usuario no está autenticado"));
                 return Task.CompletedTask;
             }
 
-            //Validar que el token contenga el claim especificado
+            //VALIDAR QUE EL TOKEN CONTENGA EL CLAIM ESPECIFICADO
             string requiredClaim = requirement.ClaimType;
             bool hasClaim = context.User.Claims.Any(x => x.Type == requiredClaim);
             if (!hasClaim)
@@ -30,7 +30,7 @@ namespace ApiBase.Auth.Authorization.Handlers
                 return Task.CompletedTask;
             }
 
-            //El requerimiento fue cumplido con éxito
+            //EL REQUERIMIENTO FUE CUMPLIDO CON ÉXITO
             context.Succeed(requirement);
             return Task.CompletedTask;
         }
