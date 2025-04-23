@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ApiBase.Auth.Authorization
 {
-    //Centralización de las políticas
+    //CENTRALIZACIÓN DE LAS POLÍTICAS
     public static class AuthorizationPolicyBuilderExtension
     {
         public static AuthorizationPolicyBuilder CustomRequiredClaim(this AuthorizationPolicyBuilder builder, string claimType)

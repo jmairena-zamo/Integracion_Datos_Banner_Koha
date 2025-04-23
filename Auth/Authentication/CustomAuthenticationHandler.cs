@@ -17,16 +17,16 @@ namespace ApiBase.Auth.Authentication
         private string failReason = "";
 
         public CustomAuthenticationHandler(
-            IOptionsMonitor<CustomAuthenticationOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock, //Obligatorios por "base"
+            IOptionsMonitor<CustomAuthenticationOptions> options, ILoggerFactory logger, UrlEncoder encoder, //Obligatorios por AuthenticationHandler
             IConfiguration config)
-        : base(options, logger, encoder, clock)
+        : base(options, logger, encoder)
         {
             this.config = config;
         }
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
-            //Verificar ingreso de token en los Headers
+            //VERIFICAR INGRESO DE TOKEN EN LOS HEADERS
             string token = Request.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
             if (token == null || token == "")
             {
@@ -34,7 +34,7 @@ namespace ApiBase.Auth.Authentication
                 return AuthenticateResult.Fail(failReason);
             }
 
-            //Verificar si el proyecto cuenta con un código de API
+            //VERIFICAR SI EL PROYECTO CUENTA CON UN CÓDIGO DE API
             string? codigoApiProject = config.GetSection("CodigoApiProject").Value;
             if (codigoApiProject == null || codigoApiProject == "")
             {
@@ -42,7 +42,7 @@ namespace ApiBase.Auth.Authentication
                 return AuthenticateResult.Fail(failReason);
             }
 
-            //Verificar si el proyecto cuenta con la url de AUTH
+            //VERIFICAR SI EL PROYECTO CUENTA CON LA URL DE AUTH
             string? authUrl = config.GetSection("AuthUrl").Value;
             if (authUrl == null || authUrl == "")
             {
@@ -50,7 +50,7 @@ namespace ApiBase.Auth.Authentication
                 return AuthenticateResult.Fail(failReason);
             }
 
-            //Validar si el token es válido
+            //VALIDAR SI EL TOKEN ES VÁLIDO
             TokenValidationDto tokenModel = new TokenValidationDto { Token = token };
             HttpClient httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("CodigoApiProject", codigoApiProject);
@@ -61,16 +61,16 @@ namespace ApiBase.Auth.Authentication
                 return AuthenticateResult.Fail(failReason);
             }
 
-            //La verificación del token fue exitosa
+            //LA VERIFICACIÓN DEL TOKEN FUE EXITOSA
             ClaimsPrincipal principal = GetPrincipal(token);
             return AuthenticateResult.Success(new AuthenticationTicket(principal, Scheme.Name));
         }
 
         protected override async Task HandleChallengeAsync(AuthenticationProperties properties)
         {
-            //Retorna una repuesta personalizada
+            //RETORNA UNA REPUESTA PERSONALIZADA
             string errorMessage = JsonConvert.SerializeObject(new ResponseModel(StatusCodes.Status401Unauthorized, ReplyMessages.invalidToken, failReason));
-            Response.Headers.Add("Content-Type", "application/json");
+            Response.Headers.Append("Content-Type", "application/json");
             Response.StatusCode = 401;
             await Response.WriteAsync(errorMessage);
         }

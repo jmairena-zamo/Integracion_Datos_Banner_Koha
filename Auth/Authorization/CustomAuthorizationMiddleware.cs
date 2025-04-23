@@ -15,7 +15,7 @@ namespace ApiBase.Auth.Authorization
             {
                 AuthorizationFailureReason? authorizationFailureReason = authorizeResult.AuthorizationFailure?.FailureReasons.FirstOrDefault();
                 string? message = authorizationFailureReason?.Message;
-                context.Response.Headers.Add("Content-Type", "application/json");
+                context.Response.Headers.Append("Content-Type", "application/json");
                 context.Response.StatusCode = 403;
                 await context.Response.WriteAsync(JsonConvert.SerializeObject(
                     new ResponseModel(StatusCodes.Status403Forbidden, ReplyMessages.accessDenied, message))

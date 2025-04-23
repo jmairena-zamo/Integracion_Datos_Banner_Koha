@@ -1,13 +1,13 @@
 ﻿using ApiBase.Constant;
 using ApiBase.Models;
-using ApiBase.Services.Interfaces;
+using ApiBase.Services.Auth.Interfaces;
 using ApiBase.Utils;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using NJsonSchema;
 using NJsonSchema.NewtonsoftJson.Generation;
 
-namespace ApiBase.Services
+namespace ApiBase.Services.Auth
 {
     public class AuthServices : IAuthServices
     {
