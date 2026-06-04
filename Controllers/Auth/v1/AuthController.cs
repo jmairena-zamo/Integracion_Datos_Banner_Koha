@@ -1,14 +1,16 @@
-﻿using ApiBase.Models;
-using ApiBase.Models.DTOs.Auth.Input;
-using ApiBase.Services.Auth.Interfaces;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+using Integracion_Datos_Banner_Koha.Models;
+using Integracion_Datos_Banner_Koha.Models.DTOs.Auth;
+using Integracion_Datos_Banner_Koha.Services.Auth.Interfaces;
+using System.IdentityModel.Tokens.Jwt;
 
-namespace ApiBase.Controllers.Auth.v1
+namespace Integracion_Datos_Banner_Koha.Controllers.Auth.v1
 {
     [Route("auth")]
     [ApiController]
-
+    [ApiExplorerSettings(GroupName = "Auth")]
     public class AuthController : ControllerBase
     {
         private readonly IAuthServices authServices;
@@ -28,6 +30,22 @@ namespace ApiBase.Controllers.Auth.v1
             if (response.Status >= 400)
             {
                 response = await authServices.AuthenticationRequestPost("/auth/v1/external/user", userLogin);
+            }
+            if (response.Status == 200 && response.Response != null)
+            {
+                var jsonResponse = JObject.FromObject(response.Response);
+                string jwtToken = jsonResponse["token"]?.ToString();
+                var handler = new JwtSecurityTokenHandler();
+                var jwtDecoded = handler.ReadJwtToken(jwtToken);
+                var expirationDate = jwtDecoded.ValidTo;
+                // Mandamos la cookie cruda
+                Response.Cookies.Append("token", jwtToken, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.Lax,
+                    Expires = expirationDate // La cookie morirá exactamente con el token
+                });
             }
 
             return StatusCode(response.Status, response);

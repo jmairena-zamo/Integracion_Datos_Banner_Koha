@@ -1,36 +1,35 @@
-﻿using ApiBase.Auth.Authorization.Requirements;
-using Microsoft.AspNetCore.Authorization;
-using System.Data;
+﻿using Microsoft.AspNetCore.Authorization;
+using Integracion_Datos_Banner_Koha.Auth.Authorization.Requirements;
 
-namespace ApiBase.Auth.Authorization.Handlers
+namespace Integracion_Datos_Banner_Koha.Auth.Authorization.Handlers
 {
     public class RolesHandler : AuthorizationHandler<RolesRequirement>
     {
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, RolesRequirement requirement)
         {
-            //VALIDAR IDENTIDAD
+            //Validar identidad
             if (context.User.Identity == null)
             {
                 context.Fail(new AuthorizationFailureReason(this, "El usuario no cuenta con una identidad"));
                 return Task.CompletedTask;
             }
 
-            //VALIDAR USUARIO AUTENTICADO
+            //Validar usuario autenticado
             if (!context.User.Identity.IsAuthenticated)
             {
                 context.Fail(new AuthorizationFailureReason(this, "El usuario no está autenticado"));
                 return Task.CompletedTask;
             }
 
-            //VALIDAR QUE EL TOKEN CONTENGA EL CLAIM DE "ROLES"
-            bool hasClaim = context.User.Claims.Any(x => x.Type == "roles");
-            if (!hasClaim)
+            //Validar que el token contenga el claim de "roles"
+            bool hasRoles = context.User.Claims.Any(x => x.Type == "roles");
+            if (!hasRoles)
             {
                 context.Fail(new AuthorizationFailureReason(this, "El usuario no tiene roles asignados"));
                 return Task.CompletedTask;
             }
 
-            //VALIDAR QUE EL TOKEN CONTENGA ALGUNO DE LOS ROLES REQUERIDOS
+            //Validar que el token contenga alguno de los roles requeridos
             var userRoles = context.User.Claims.Where(c => c.Type == "roles");
             string[] allowedRoles = requirement.Roles;
             bool hasAllowedRole = userRoles.Any(x => allowedRoles.Contains(x.Value)) || allowedRoles.Length == 0;
@@ -40,7 +39,7 @@ namespace ApiBase.Auth.Authorization.Handlers
                 return Task.CompletedTask;
             }
 
-            //EL REQUERIMIENTO FUE CUMPLIDO CON ÉXITO
+            //El requerimiento fue cumplido con éxito
             context.Succeed(requirement);
             return Task.CompletedTask;
         }

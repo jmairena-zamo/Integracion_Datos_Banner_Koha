@@ -1,0 +1,182 @@
+﻿@page "/auth/login-hangfire"
+@model Pages.Auth.LoginHangfireModel
+
+@{
+    Layout = null;
+    var returnUrl = Request.Query["returnUrl"];
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Hangfire Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+        }
+
+        body {
+            background: #f0f2f5;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 400px;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            background: white;
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            border: none;
+        }
+
+        .card-body {
+            padding: 2.5rem;
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            border: none;
+            padding: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+            .btn-primary:hover {
+                background: #2980b9;
+                transform: translateY(-1px);
+            }
+
+        .form-control {
+            padding: 0.8rem;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+            .form-control:focus {
+                box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+                border-color: var(--accent-color);
+            }
+
+        .logo-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #ecf0f1;
+        }
+
+        .loader {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <div class="card-header">
+            <i class="fa-solid fa-gauge-high logo-icon"></i>
+            <h4 class="mb-0">Hangfire Monitor</h4>
+            <small class="text-white-50">Acceso Administrativo</small>
+        </div>
+        <div class="card-body">
+            <div id="alertError" class="alert alert-danger d-none" role="alert"></div>
+
+            <form id="loginForm">
+                <div class="mb-3">
+                    <label class="form-label text-muted small fw-bold">USUARIO</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0"><i class="fa-solid fa-user text-muted"></i></span>
+                        <input type="text" id="userInput" class="form-control border-start-0" placeholder="Usuario de Dominio" required autofocus>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label text-muted small fw-bold">CONTRASEÑA</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0"><i class="fa-solid fa-lock text-muted"></i></span>
+                        <input type="password" id="passInput" class="form-control border-start-0" placeholder="••••••••" required>
+                    </div>
+                </div>
+                <button type="submit" id="btnLogin" class="btn btn-primary w-100 mb-3">
+                    <span class="btn-text"><i class="fa-solid fa-right-to-bracket me-2"></i> Acceder</span>
+                    <span class="spinner-border spinner-border-sm loader" role="status"></span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const alertError = document.getElementById('alertError');
+            const btn = document.getElementById('btnLogin');
+            const btnText = btn.querySelector('.btn-text');
+            const loader = btn.querySelector('.loader');
+
+            // Reset UI
+            alertError.classList.add('d-none');
+            btn.disabled = true;
+            btnText.style.display = 'none';
+            loader.style.display = 'inline-block';
+
+            const payload = {
+                Username: document.getElementById('userInput').value,
+                password: document.getElementById('passInput').value
+            };
+
+            try {
+                const response = await fetch('token', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    // El servidor ya envió el header Set-Cookie con 'hangfire_token'
+                    // Redirigimos al returnUrl o al dashboard
+                        const urlParams = new URLSearchParams(window.location.search);
+
+                    // Obtenemos el returnUrl del query, o usamos la base de la app + /hangfire
+                    let destination = urlParams.get('returnUrl');
+
+                    if (!destination) {
+                        destination = '@Model.HttpContext.Request.PathBase' + '/hangfire';
+                    }
+
+                    window.location.href = destination;
+                } else {
+                    alertError.textContent = result.message || 'Error de autenticación';
+                    alertError.classList.remove('d-none');
+                    btn.disabled = false;
+                    btnText.style.display = 'inline-block';
+                    loader.style.display = 'none';
+                }
+            } catch (error) {
+                alertError.textContent = 'No se pudo conectar con el servicio de autenticación';
+                alertError.classList.remove('d-none');
+                btn.disabled = false;
+                btnText.style.display = 'inline-block';
+                loader.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

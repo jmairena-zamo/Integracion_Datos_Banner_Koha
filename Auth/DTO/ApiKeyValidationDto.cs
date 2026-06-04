@@ -1,12 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ApiBase.Auth.DTO
+namespace auth.Models.DTOs.Input
 {
     public class ApiKeyValidationDto
     {
         [Required]
         public string? ApiKey { get; set; }
-        [Required]
-        public string[]? Roles { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 
-namespace ApiBase.Auth.Authentication
+namespace Integracion_Datos_Banner_Koha.Auth.Authentication
 {
     public class CustomAuthenticationOptions : AuthenticationSchemeOptions
     {

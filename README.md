@@ -24,7 +24,7 @@ Proyecto base para la creación de un api REST.
 ### Importar plantilla de Api Base
 
 1.  Debe cerrar todos los proyectos de visual studio
-2.  Descargar el archivo zip: ApiBaseZamorano_v1.1.0.zip
+2.  Descargar el archivo zip: Integracion_Datos_Banner_KohaZamorano_v1.1.0.zip
 3.  Mover el archivo a la su carpeta local: \Documents\Visual Studio {Version}\Templates\ProjectTemplates
 4.  Crear el proyecto con la nueva plantilla
 

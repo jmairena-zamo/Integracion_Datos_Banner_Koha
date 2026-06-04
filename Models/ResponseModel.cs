@@ -1,4 +1,4 @@
-﻿namespace ApiBase.Models
+﻿namespace Integracion_Datos_Banner_Koha.Models
 {
     public class ResponseModel
     {

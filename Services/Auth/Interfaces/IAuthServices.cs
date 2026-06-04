@@ -1,6 +1,6 @@
-﻿using ApiBase.Models;
+﻿using Integracion_Datos_Banner_Koha.Models;
 
-namespace ApiBase.Services.Auth.Interfaces
+namespace Integracion_Datos_Banner_Koha.Services.Auth.Interfaces
 {
     public interface IAuthServices
     {

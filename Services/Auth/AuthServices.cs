@@ -1,13 +1,13 @@
-﻿using ApiBase.Constant;
-using ApiBase.Models;
-using ApiBase.Services.Auth.Interfaces;
-using ApiBase.Utils;
+﻿using Integracion_Datos_Banner_Koha.Constant;
+using Integracion_Datos_Banner_Koha.Models;
+using Integracion_Datos_Banner_Koha.Services.Auth.Interfaces;
+using Integracion_Datos_Banner_Koha.Utils;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using NJsonSchema;
 using NJsonSchema.NewtonsoftJson.Generation;
 
-namespace ApiBase.Services.Auth
+namespace Integracion_Datos_Banner_Koha.Services.Auth
 {
     public class AuthServices : IAuthServices
     {

@@ -1,6 +1,6 @@
-﻿using ApiBase.Auth.DTO;
-using ApiBase.Constant;
-using ApiBase.Models;
+﻿using Integracion_Datos_Banner_Koha.Auth.DTO;
+using Integracion_Datos_Banner_Koha.Constant;
+using Integracion_Datos_Banner_Koha.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
@@ -9,7 +9,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 
-namespace ApiBase.Auth.Authentication
+namespace Integracion_Datos_Banner_Koha.Auth.Authentication
 {
     public class CustomAuthenticationHandler : AuthenticationHandler<CustomAuthenticationOptions>
     {

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace ApiBase.Utils
+namespace Integracion_Datos_Banner_Koha.Utils
 {
     public static class JsonUtils
     {

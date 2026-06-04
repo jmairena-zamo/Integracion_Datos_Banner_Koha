@@ -1,9 +1,9 @@
-﻿using ApiBase.Constant;
-using ApiBase.Models;
+﻿using Integracion_Datos_Banner_Koha.Constant;
+using Integracion_Datos_Banner_Koha.Models;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ApiBase.Filters.Action
+namespace Integracion_Datos_Banner_Koha.Filters.Action
 {
     public class ValidationModelAttribute : IActionFilter
     {

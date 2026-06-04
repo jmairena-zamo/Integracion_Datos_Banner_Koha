@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ApiBase.Auth.DTO
+namespace Integracion_Datos_Banner_Koha.Auth.DTO
 {
     public class TokenValidationDto
     {

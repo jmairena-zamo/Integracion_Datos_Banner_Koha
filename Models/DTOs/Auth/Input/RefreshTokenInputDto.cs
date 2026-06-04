@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ApiBase.Models.DTOs.Auth.Input
+namespace Integracion_Datos_Banner_Koha.Models.DTOs.Auth.Input
 {
     public class RefreshTokenInputDto
     {

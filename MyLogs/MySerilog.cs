@@ -5,7 +5,7 @@ using Serilog.Sinks.MSSqlServer;
 using System.Collections.ObjectModel;
 using System.Data;
 
-namespace ApiBase.MyLogs
+namespace Integracion_Datos_Banner_Koha.MyLogs
 {
     public static class MySerilog
     {

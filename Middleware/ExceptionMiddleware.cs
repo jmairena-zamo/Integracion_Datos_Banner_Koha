@@ -1,19 +1,19 @@
-﻿using ApiBase.Constant;
-using ApiBase.Models;
+﻿using Integracion_Datos_Banner_Koha.Constant;
+using Integracion_Datos_Banner_Koha.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Serilog.Context;
 using System.Net;
 using System.Net.Mime;
 
-namespace ApiBase.Middleware
+namespace Integracion_Datos_Banner_Koha.Middleware
 {
     public class ExceptionMiddleware
     {
         public RequestDelegate requestDelegate;
         private readonly ILogger<ExceptionMiddleware> logger;
         private readonly List<string> whiteRoutes = new() { "/" };
-        private readonly List<string> AllowjsonMediaTypes = new() { "application/json", "application/json; charset=utf-8" };
+        private readonly List<string> AllowjsonMediaTypes = new() { "application/x-www-form-urlencoded; charset=UTF-8", "application/json", "application/json; charset=utf-8", "multipart/form-data" };
 
         public ExceptionMiddleware
         (RequestDelegate requestDelegate, ILogger<ExceptionMiddleware> logger)
@@ -30,6 +30,7 @@ namespace ApiBase.Middleware
                 if (context.Request.Method == "PUT" || context.Request.Method == "POST" || context.Request.Method == "PATCH")
                 {
                     string mediaTypeRequest = context.Request.ContentType ?? "No especificada";
+                    string mediaType = GetMediaType(mediaTypeRequest);
                     bool isValidJsonMediaType = AllowjsonMediaTypes.Any(x => string.Equals(mediaTypeRequest, x, StringComparison.OrdinalIgnoreCase));
                     if (!isValidJsonMediaType)
                     {
@@ -48,6 +49,12 @@ namespace ApiBase.Middleware
             {
                 await HandleException(context, ex);
             }
+        }
+
+        private string GetMediaType(string mediaType)
+        {
+            if (mediaType.Contains("multipart/form-data")) return mediaType.Split(';').First().Trim();
+            return mediaType;
         }
 
         private Task HandleException(HttpContext context, Exception ex)

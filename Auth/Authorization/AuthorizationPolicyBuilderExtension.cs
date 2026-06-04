@@ -1,7 +1,7 @@
-﻿using ApiBase.Auth.Authorization.Requirements;
+﻿using Integracion_Datos_Banner_Koha.Auth.Authorization.Requirements;
 using Microsoft.AspNetCore.Authorization;
 
-namespace ApiBase.Auth.Authorization
+namespace Integracion_Datos_Banner_Koha.Auth.Authorization
 {
     //CENTRALIZACIÓN DE LAS POLÍTICAS
     public static class AuthorizationPolicyBuilderExtension
