@@ -1,4 +1,14 @@
-﻿using Integracion_Datos_Banner_Koha.Models.DTOs;
+﻿//Título del Programa: BannerKoha
+//Autor: José Anibal Mairena Diaz
+//Fecha de Creación:  19 / 05 / 2026
+//Lenguaje: C#
+//Versión: v1.0
+/*Propósito: En este apartado se generan los servicios que se encargarán
+  de enviar el correo de notificación para saber si fueron añadidos perfiles
+  o se mantiene con los perfiles actuales..*/
+//Responsable de Mantenimiento: José Anibal Mairena Diaz
+
+using Integracion_Datos_Banner_Koha.Models.DTOs;
 using Integracion_Datos_Banner_Koha.Models.DTOs.Mails;
 using Integracion_Datos_Banner_Koha.Models.DTOs.Response;
 using Integracion_Datos_Banner_Koha.Services.Mail.Interfaces;

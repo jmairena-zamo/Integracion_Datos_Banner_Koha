@@ -1,4 +1,14 @@
-﻿using Integracion_Datos_Banner_Koha.Services.Integracion_Banner_Koha.Interfaces;
+﻿//Título del Programa: BannerKoha
+//Autor: José Anibal Mairena Diaz
+//Fecha de Creación:  19 / 05 / 2026
+//Lenguaje: C#
+//Versión: v1.0
+/*Propósito: En este apartado se controlan los servicios de KohaSyncServices
+  para así ser utilizado de manera manual, este no es obligatorio usarlo, ya que
+  este proyecto es un job que se generará automáticamente.*/
+//Responsable de Mantenimiento: José Anibal Mairena Diaz
+
+using Integracion_Datos_Banner_Koha.Services.Integracion_Banner_Koha.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Integracion_Datos_Banner_Koha.Controllers

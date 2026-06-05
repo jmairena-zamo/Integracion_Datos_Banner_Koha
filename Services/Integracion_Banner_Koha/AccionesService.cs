@@ -1,4 +1,15 @@
-﻿using Hangfire;
+﻿//Título del Programa: BannerKoha
+//Autor: José Anibal Mairena Diaz
+//Fecha de Creación:  19 / 05 / 2026
+//Lenguaje: C#
+//Versión: v1.0
+/*Propósito: En este apartado se utilizan los servicios de sincronización de Banner y Koha para analizar y cruzar datos,
+  identificar estudiantes nuevos, crear perfiles en Koha, registrar logs de las operaciones y enviar notificaciones por correo
+  electrónico con los resultados del proceso. Además, se implementa una captura de errores global para manejar cualquier excepción
+  crítica que pueda surgir durante la ejecución del proceso, enviando alertas detalladas al equipo responsable.*/
+//Responsable de Mantenimiento: José Anibal Mairena Diaz
+
+using Hangfire;
 using Integracion_Datos_Banner_Koha.Context;
 using Integracion_Datos_Banner_Koha.Models.DB.Biblioteca;
 using Integracion_Datos_Banner_Koha.Models.DTOs;

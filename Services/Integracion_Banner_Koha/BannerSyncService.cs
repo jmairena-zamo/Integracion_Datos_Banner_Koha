@@ -1,4 +1,14 @@
-﻿using Integracion_Datos_Banner_Koha.Models;
+﻿//Título del Programa: BannerKoha
+//Autor: José Anibal Mairena Diaz
+//Fecha de Creación:  19 / 05 / 2026
+//Lenguaje: C#
+//Versión: v1.0
+/*Propósito: En este apartado se obtiene la información de los estudiantes desde Banner
+  con el fin de poder integrar datos de Banner para compararlos y, en todo caso, crear 
+  nuevos usuarios en la plataforma de Koha*/
+//Responsable de Mantenimiento: José Anibal Mairena Diaz
+
+using Integracion_Datos_Banner_Koha.Models;
 using Integracion_Datos_Banner_Koha.Models.DTOs;
 using Microsoft.Extensions.Logging;
 using System;

@@ -1,4 +1,14 @@
-﻿using System;
+﻿//Título del Programa: BannerKoha
+//Autor: José Anibal Mairena Diaz
+//Fecha de Creación:  19 / 05 / 2026
+//Lenguaje: C#
+//Versión: v1.0
+/*Propósito: En este apartado se controlan los servicios de BannerSyncServices
+  para así ser utilizado de manera manual, este no es obligatorio usarlo, ya que
+  este proyecto es un job que se generará automáticamente.*/
+//Responsable de Mantenimiento: José Anibal Mairena Diaz
+
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
