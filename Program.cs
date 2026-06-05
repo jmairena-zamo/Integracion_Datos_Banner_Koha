@@ -17,6 +17,8 @@ using Integracion_Datos_Banner_Koha.Services.Auth.Interfaces;
 using Integracion_Datos_Banner_Koha.Services.Integracion_Banner_Koha;
 using Integracion_Datos_Banner_Koha.Services.Integracion_Banner_Koha.Interfaces;
 using Integracion_Datos_Banner_Koha.Services.Jobs;
+using Integracion_Datos_Banner_Koha.Services.Mail.Interfaces;
+using Integracion_Datos_Banner_Koha.Services.Mail;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -137,6 +139,7 @@ try
     //// Add this line with your other service registrations
     builder.Services.AddScoped<HangfireDashboardAuthFilter>();
     builder.Services.AddScoped<RestrictDeleteJobsFilter>();
+    builder.Services.AddHttpClient<IMailsServices, MailsServices>();
 
     //------- Jobs Scheduler
     builder.Services.AddScoped<JobScheduler>();

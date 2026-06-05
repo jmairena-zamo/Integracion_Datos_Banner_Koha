@@ -32,7 +32,17 @@
 	<Folder Include="Context\" />
     <Folder Include="Models\DB\" />
     <Folder Include="Models\DTOs\Auth\Output\" />
+    <Folder Include="Templates\" />
     <Folder Include="Profiles\Auth\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="EmailBanner.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\EmailBanner.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
