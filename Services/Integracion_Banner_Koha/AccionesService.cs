@@ -166,9 +166,6 @@ namespace Integracion_Datos_Banner_Koha.Services.Integracion_Banner_Koha
             }
             catch (Exception ex)
             {
-                // ==========================================================
-                // CAPTURA DE ERROR GLOBAL: SE DISPARA AL CORREO DE ERRORES
-                // ==========================================================
                 try
                 {
                     await EnviarNotificacionErrorGlobalAsync(ex, usuarioCreador);
@@ -196,7 +193,6 @@ namespace Integracion_Datos_Banner_Koha.Services.Integracion_Banner_Koha
             {
                 foreach (var est in estudiantesProcesados)
                 {
-                    // Determinar colores según el estado
                     string colorEstado = est.EsExito ? "#048047" : "#DC3545";
 
                     filasHtml.Append("<tr style='border-collapse:collapse'>");
@@ -243,7 +239,6 @@ namespace Integracion_Datos_Banner_Koha.Services.Integracion_Banner_Koha
         {
             string fechaError = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
-            // Construcción de un cuerpo HTML limpio e informativo para reportar el problema técnico
             StringBuilder htmlBuilder = new StringBuilder();
             htmlBuilder.Append("<div style='font-family:Arial, sans-serif; padding:20px; border:1px solid #dc3545; border-radius:5px; background-color:#fffdfd;'>");
             htmlBuilder.Append("<h2 style='color:#dc3545; margin-top:0;'>⚠️ Alerta Crítica: Fallo en Sincronización Banner-Koha</h2>");
@@ -264,7 +259,7 @@ namespace Integracion_Datos_Banner_Koha.Services.Integracion_Banner_Koha
             var payloadError = new MailsModel
             {
                 To = destinatariosErrorFormateados,
-                Subject = "🚨 ERROR CRÍTICO: Sincronización Automática Banner - Koha",
+                Subject = "ERROR CRÍTICO: Sincronización Automática Banner - Koha",
                 Body = htmlBuilder.ToString()
             };
 
