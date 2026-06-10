@@ -20,7 +20,7 @@ namespace Integracion_Datos_Banner_Koha.Services.Jobs
                 recurringJobId,
                 queues,
                 x => x.AnalizarYCruzarDatosAsync(usuario, host),
-                "30 * * * *",
+                "0 2 * * *",
                 recurringJobOptions
             );
         }
