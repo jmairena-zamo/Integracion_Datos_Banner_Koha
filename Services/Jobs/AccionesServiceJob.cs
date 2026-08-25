@@ -8,9 +8,14 @@ namespace Integracion_Datos_Banner_Koha.Services.Jobs
     {
         private static void CreateAccionesServiceJob(string queues, RecurringJobOptions recurringJobOptions, bool isJobEnabled)
         {
-            if (!isJobEnabled) return;
-
             string recurringJobId = "INTEGRACION_BANNER_KOHA";
+
+            if (!isJobEnabled)
+            {
+                RecurringJob.RemoveIfExists(recurringJobId);
+                return;
+            }
+
             RecurringJob.RemoveIfExists(recurringJobId);
 
             string usuario = "Api_Koha";
